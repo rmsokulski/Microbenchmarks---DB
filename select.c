@@ -1,7 +1,7 @@
-#include <select.h>
+#include "select.h"
 
 
-void select_gt_float(Column_Float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison){
+void select_gt_float(float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison){
   uint64_t i   = 0;
   uint64_t idx = 0;
   new_indexes[0]  = 0;
@@ -15,7 +15,7 @@ void select_gt_float(Column_Float *column, uint64_t *indexes, uint64_t * new_ind
   } 
 }
 
-void select_ge_float(Column_Float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison) {
+void select_ge_float(float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison) {
   uint64_t i   = 0;
   uint64_t idx = 0;
   new_indexes[0]  = 0;
@@ -28,7 +28,7 @@ void select_ge_float(Column_Float *column, uint64_t *indexes, uint64_t * new_ind
     } 
   } 
 }
-void select_lt_float(Column_Float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison) {
+void select_lt_float(float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison) {
   uint64_t i   = 0;
   uint64_t idx = 0;
   new_indexes[0]  = 0;
@@ -41,7 +41,7 @@ void select_lt_float(Column_Float *column, uint64_t *indexes, uint64_t * new_ind
     } 
   } 
 }
-void select_le_float(Column_Float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison) {
+void select_le_float(float *column, uint64_t *indexes, uint64_t * new_indexes, float comparison) {
   uint64_t i   = 0;
   uint64_t idx = 0;
   new_indexes[0]  = 0;

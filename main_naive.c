@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
 	input_tab = fopen(argv[2], "r");
 	if (!input_tab)
 	{
-		printf("Erro. Não foi possível ler a segunda tabela.\n");
+        printf("Erro. Não foi possível ler a segunda tabela.\n");
 		abort();
 	}
 	i = 0;
