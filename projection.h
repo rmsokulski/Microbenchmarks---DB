@@ -6,5 +6,5 @@
 #include <stdarg.h>
 
 
-Table_t * projection(uint64_t *indexes, uint64_t num_columns, ...);
+Table_t * projection(int64_t *indexes, int32_t num_columns, ...);
 #endif

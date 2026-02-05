@@ -1,3 +1,5 @@
+
+#define DEBUG 0
 #include "io.h"
 
 
@@ -24,7 +26,6 @@ Table_t * read_table(FILE *table_file){
   result_table->num_columns = num_columns;
   result_table->column_type = (DataType_t * ) malloc(sizeof(DataType_t) * num_columns);
   result_table->columns = (void **) malloc(sizeof(void *) * num_columns);
-
 
 
   
@@ -60,26 +61,31 @@ Table_t * read_table(FILE *table_file){
   }
   
 
+  int64_t line_id = 0;
 
   // Values
   while(fgets(line, sizeof(line), table_file) != NULL) {
     column_id = 0;
+
     value = strtok(line, "|");
+    
+   
+
+    
 
     while(value != NULL) {
-
       switch(result_table->column_type[column_id]) {
         case INT_32:
-          ((int32_t *)result_table->columns)[column_id] = atoi(value); 
+          ((int32_t **)result_table->columns)[column_id][line_id] = atoi(value); 
           break;
 
         case FLOAT:
-          ((float *)result_table->columns)[column_id] = atof(value);
+          ((float **)result_table->columns)[column_id][line_id] = atof(value);
           break;
 
         case CHAR_ARRAY:
-          ((char **)result_table->columns)[column_id] = (char *) malloc(sizeof(char) * (strlen(value) + 1));
-          strcpy(((char **)result_table->columns)[column_id], value);
+          ((char ***)result_table->columns)[column_id][line_id] = (char *) malloc(sizeof(char) * (strlen(value) + 1));
+          strcpy(((char ***)result_table->columns)[column_id][line_id], value);
           break;
 
       }
@@ -88,29 +94,43 @@ Table_t * read_table(FILE *table_file){
       column_id++;
       value = strtok(NULL, "|");
     }
+    line_id++;
   }
  
-
   return result_table;
 }
 
 void print_table(Table_t *table_pointer){
   int64_t num_lines = table_pointer->num_lines;
   int32_t num_columns = table_pointer->num_columns;
-  
+
+  #if DEBUG == 1
+  printf("Lines: %ld -- Columns: %d\n", num_lines, num_columns);
+  #endif
+
   for (int64_t l=0; l < num_lines; ++l) {
     for (int32_t c=0; c < num_columns; ++c) {
-      switch(table_pointer->column_type[num_columns]) {
+      switch(table_pointer->column_type[c]) {
         case INT_32:
+          #if DEBUG == 1
+          printf("Printing (%ld, %d) (INT_32)\n", l, c);
+          #endif
           printf("%d ", ((int32_t **)table_pointer->columns)[c][l]);
+
           break;
 
         case FLOAT:
+          #if DEBUG == 1
+          printf("Printing (%ld, %d) (FLOAT)\n", l, c);
+          #endif
           printf("%f ", ((float **)table_pointer->columns)[c][l]);
 
           break;
 
         case CHAR_ARRAY:
+          #if DEBUG == 1
+          printf("Printing (%ld, %d) (CHAR_ARRAY)\n", l, c);
+          #endif
           printf("%s ", ((char ***)table_pointer->columns)[c][l]);
 
           break;
